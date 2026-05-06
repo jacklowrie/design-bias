@@ -1,0 +1,17 @@
+Make a user settings page with the following settings, organized into sections:
+   - Email address (display current)
+   - Password (with change button)
+   - Username (display current)
+   - Email notifications (toggle)
+   - Weekly digest (toggle)
+   - Marketing emails (toggle)
+   - Profile visibility (dropdown: Public/Private/Contacts Only)
+   - Show online status (toggle)
+   - Allow direct messages (toggle)
+   - Two-factor authentication (toggle with setup button)
+   - Theme (dropdown: Light/Dark/Auto)
+   - Display density (dropdown: Compact/Normal/Spacious)
+All sections should have a Save button and a Reset button at the bottom.
+
+This will be the first page proof-of-concept for a larger website built with {framework}.
+The page should have a {descriptor} design.
