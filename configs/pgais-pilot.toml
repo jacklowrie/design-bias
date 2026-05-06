@@ -1,0 +1,17 @@
+[experiment]
+name = "pgais-fixed"
+task = ""
+
+[data]
+input = "data/design-prompts-lite-dataset.csv"
+output = "outputs/design-responses-lite-dataset.csv"
+
+[compute]
+location = "remote"
+url = "https://genai.rcac.purdue.edu/api/chat/completions"
+
+[model]
+path = "pgais-lite-models.csv"
+num_samples = 50
+temperature = 0.7
+seed = 542026
