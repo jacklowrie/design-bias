@@ -1,5 +1,5 @@
 [project]
-name = "prismal"
+name = "design-bias"
 version = "0.1.0"
 description = "template for AI/ML research"
 readme = "README.md"

@@ -380,6 +380,77 @@ wheels = [
 ]
 
 [[package]]
+name = "design-bias"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "dotenv" },
+    { name = "loguru" },
+    { name = "numpy" },
+    { name = "pydantic" },
+    { name = "tqdm" },
+]
+
+[package.dev-dependencies]
+analysis = [
+    { name = "marimo" },
+    { name = "polars" },
+    { name = "seaborn" },
+]
+dev = [
+    { name = "pdoc" },
+    { name = "prek" },
+    { name = "pytest" },
+    { name = "ruff" },
+    { name = "rumdl" },
+    { name = "ty" },
+]
+local-inference = [
+    { name = "accelerate" },
+    { name = "bitsandbytes" },
+    { name = "torch" },
+    { name = "transformers" },
+]
+remote-inference = [
+    { name = "openai" },
+    { name = "requests" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "dotenv", specifier = ">=0.9.9" },
+    { name = "loguru", specifier = ">=0.7.3" },
+    { name = "numpy", specifier = ">=2.4.4" },
+    { name = "pydantic", specifier = ">=2.13.3" },
+    { name = "tqdm", specifier = ">=4.67.3" },
+]
+
+[package.metadata.requires-dev]
+analysis = [
+    { name = "marimo", specifier = ">=0.23.4" },
+    { name = "polars", specifier = ">=1.40.1" },
+    { name = "seaborn", specifier = ">=0.13.2" },
+]
+dev = [
+    { name = "pdoc", specifier = ">=16.0.0" },
+    { name = "prek", specifier = ">=0.3.11" },
+    { name = "pytest", specifier = ">=9.0.3" },
+    { name = "ruff", specifier = ">=0.15.12" },
+    { name = "rumdl", specifier = ">=0.1.87" },
+    { name = "ty", specifier = ">=0.0.34" },
+]
+local-inference = [
+    { name = "accelerate", specifier = ">=1.13.0" },
+    { name = "bitsandbytes", specifier = ">=0.49.2" },
+    { name = "torch", specifier = ">=2.11.0" },
+    { name = "transformers", specifier = ">=5.7.0" },
+]
+remote-inference = [
+    { name = "openai", specifier = ">=2.33.0" },
+    { name = "requests", specifier = ">=2.33.1" },
+]
+
+[[package]]
 name = "distro"
 version = "1.9.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1538,77 +1609,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/19/0c/8ab0ae140201dcee505f58b60abbe56bd05ac96b821a6866f6f90c4d971f/prek-0.3.11-py3-none-win32.whl", hash = "sha256:35d2361049653a3dcf27227b7f1b340c5c42a12c0e0361c4b785921bfd125839", size = 5120856, upload-time = "2026-04-27T04:23:02.752Z" },
     { url = "https://files.pythonhosted.org/packages/57/05/9844c1125d3714f6f6c7b475884128a4b0c6c3ee0cd208ead44ca8174687/prek-0.3.11-py3-none-win_amd64.whl", hash = "sha256:a387689cd2e182f92dbb681151ee5a04f494fe97e95d6d783875da90b950e6d5", size = 5510916, upload-time = "2026-04-27T04:22:45.704Z" },
     { url = "https://files.pythonhosted.org/packages/ff/13/24b0288c553dc8d61f44c4d0746fe9bb1e1bd29d1e70571658536e4c0f72/prek-0.3.11-py3-none-win_arm64.whl", hash = "sha256:e4a8f900378a6657c7eb2fc4b12fa5c934edf209d0a24544539842479ec16e0b", size = 5345988, upload-time = "2026-04-27T04:22:50.918Z" },
-]
-
-[[package]]
-name = "prismal"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "dotenv" },
-    { name = "loguru" },
-    { name = "numpy" },
-    { name = "pydantic" },
-    { name = "tqdm" },
-]
-
-[package.dev-dependencies]
-analysis = [
-    { name = "marimo" },
-    { name = "polars" },
-    { name = "seaborn" },
-]
-dev = [
-    { name = "pdoc" },
-    { name = "prek" },
-    { name = "pytest" },
-    { name = "ruff" },
-    { name = "rumdl" },
-    { name = "ty" },
-]
-local-inference = [
-    { name = "accelerate" },
-    { name = "bitsandbytes" },
-    { name = "torch" },
-    { name = "transformers" },
-]
-remote-inference = [
-    { name = "openai" },
-    { name = "requests" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "dotenv", specifier = ">=0.9.9" },
-    { name = "loguru", specifier = ">=0.7.3" },
-    { name = "numpy", specifier = ">=2.4.4" },
-    { name = "pydantic", specifier = ">=2.13.3" },
-    { name = "tqdm", specifier = ">=4.67.3" },
-]
-
-[package.metadata.requires-dev]
-analysis = [
-    { name = "marimo", specifier = ">=0.23.4" },
-    { name = "polars", specifier = ">=1.40.1" },
-    { name = "seaborn", specifier = ">=0.13.2" },
-]
-dev = [
-    { name = "pdoc", specifier = ">=16.0.0" },
-    { name = "prek", specifier = ">=0.3.11" },
-    { name = "pytest", specifier = ">=9.0.3" },
-    { name = "ruff", specifier = ">=0.15.12" },
-    { name = "rumdl", specifier = ">=0.1.87" },
-    { name = "ty", specifier = ">=0.0.34" },
-]
-local-inference = [
-    { name = "accelerate", specifier = ">=1.13.0" },
-    { name = "bitsandbytes", specifier = ">=0.49.2" },
-    { name = "torch", specifier = ">=2.11.0" },
-    { name = "transformers", specifier = ">=5.7.0" },
-]
-remote-inference = [
-    { name = "openai", specifier = ">=2.33.0" },
-    { name = "requests", specifier = ">=2.33.1" },
 ]
 
 [[package]]
