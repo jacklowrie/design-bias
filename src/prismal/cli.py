@@ -43,4 +43,10 @@ def add_common_arguments(parser: argparse.ArgumentParser) -> argparse.ArgumentPa
         type=str,
         help="Model ID to use (overrides config).",
     )
+    parser.add_argument(
+        "-t",
+        "--temperature",
+        type=float,
+        help="Temperature for sampling (overrides config).",
+    )
     return parser
