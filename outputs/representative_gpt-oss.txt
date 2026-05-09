@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Settings</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: .75rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        }
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid #e9ecef;
+            font-weight: 600;
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .btn-save {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+        .btn-save:hover {
+            background-color: #0b5ed7;
+        }
+        .btn-reset {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        .btn-reset:hover {
+            background-color: #5c636a;
+        }
+        @media (max-width: 576px) {
+            .card-body .row > div {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <h2 class="mb-4 text-center">User Settings</h2>
+    <form id="settingsForm">
+        <!-- Account Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Account
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" value="jane.doe@example.com" readonly>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="button" class="btn btn-outline-primary" id="changePasswordBtn">Change Password</button>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" value="janedoe" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Notifications
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check form-switch flex-grow-1">
+                            <input class="form-check-input" type="checkbox" id="emailNotif" checked>
+                            <label class="form-check-label ms-2" for="emailNotif">Email notifications</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check form-switch flex-grow-1">
+                            <input class="form-check-input" type="checkbox" id="weeklyDigest">
+                            <label class="form-check-label ms-2" for="weeklyDigest">Weekly digest</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check form-switch flex-grow-1">
+                            <input class="form-check-input" type="checkbox" id="marketingEmails" checked>
+                            <label class="form-check-label ms-2" for="marketingEmails">Marketing emails</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Privacy
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Profile visibility</label>
+                        <select class="form-select" id="profileVisibility">
+                            <option>Public</option>
+                            <option>Private</option>
+                            <option>Contacts Only</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check form-switch flex-grow-1">
+                            <input class="form-check-input" type="checkbox" id="onlineStatus" checked>
+                            <label class="form-check-label ms-2" for="onlineStatus">Show online status</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check form-switch flex-grow-1">
+                            <input class="form-check-input" type="checkbox" id="directMessages" checked>
+                            <label class="form-check-label ms-2" for="directMessages">Allow direct messages</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div class="form-check form-switch flex-grow-1">
+                            <input class="form-check-input" type="checkbox" id="twoFactorAuth">
+                            <label class="form-check-label ms-2" for="twoFactorAuth">Two‑factor authentication</label>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary ms-2 d-none" id="setup2FABtn">Setup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appearance Section -->
+        <div class="card mb-4">
+            <div class="card-header">
+                Appearance
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Theme</label>
+                        <select class="form-select" id="themeSelect">
+                            <option>Light</option>
+                            <option>Dark</option>
+                            <option selected>Auto</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Display density</label>
+                        <select class="form-select" id="densitySelect">
+                            <option>Compact</option>
+                            <option selected>Normal</option>
+                            <option>Spacious</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-end gap-2">
+            <button type="reset" class="btn btn-reset">Reset</button>
+            <button type="submit" class="btn btn-save">Save</button>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap Bundle JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Show/hide Setup button for 2FA
+    const twoFA = document.getElementById('twoFactorAuth');
+    const setupBtn = document.getElementById('setup2FABtn');
+    function toggle2FASetup() {
+        setupBtn.classList.toggle('d-none', !twoFA.checked);
+    }
+    twoFA.addEventListener('change', toggle2FASetup);
+    toggle2FASetup();
+
+    // Change password button (placeholder)
+    document.getElementById('changePasswordBtn').addEventListener('click', () => {
+        alert('Password change flow would be initiated.');
+    });
+
+    // Setup 2FA button (placeholder)
+    setupBtn.addEventListener('click', () => {
+        alert('2FA setup flow would be initiated.');
+    });
+
+    // Form submission handling
+    document.getElementById('settingsForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // In a real app, you'd collect the data and send via AJAX.
+        alert('Settings saved successfully!');
+    });
+
+    // Reset button will automatically revert to initial values because we use HTML defaults.
+</script>
+</body>
+</html>

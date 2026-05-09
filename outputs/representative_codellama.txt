@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+
+     <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEWLTheAKtT+RDnm6b7GXMnSXowP57a2k9dwZjIyBMs84ghb8+1l" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>User Settings</h1>
+        <form>
+            <section id="email_address">
+                <label for="email">Email address:</label>
+                <input type="text" id="email" name="email" value="" disabled>
+                <button class="btn btn-primary">Change</button>
+            </section>
+            <section id="password">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="">
+                <button class="btn btn-primary">Save Changes</button>
+                <button class="btn btn-secondary">Reset Password</button>
+            </section>
+            <section id="username">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="" disabled>
+            </section>
+            <section id="email_notifications">
+                <h2>Email Notifications</h2>
+                <p>Receive notifications about new messages and activity.</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="email_notifications" name="email_notifications">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Toggle email notifications</label>
+                </div>
+            </section>
+            <section id="weekly_digest">
+                <h2>Weekly Digest</h2>
+                <p>Receive a weekly summary of your activity and messages.</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="weekly_digest" name="weekly_digest">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Toggle weekly digest</label>
+                </div>
+            </section>
+            <section id="marketing_emails">
+                <h2>Marketing Emails</h2>
+                <p>Receive marketing emails about new products and features.</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="marketing_emails" name="marketing_emails">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Toggle marketing emails</label>
+                </div>
+            </section>
+            <section id="profile_visibility">
+                <h2>Profile Visibility</h2>
+                <p>Control who can see your profile information.</p>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Public</option>
+                    <option value="1">Private</option>
+                    <option value="2">Contacts only</option>
+                </select>
+            </section>
+            <section id="show_online_status">
+                <h2>Show Online Status</h2>
+                <p>Let others know when you are online.</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="show_online_status" name="show_online_status">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Toggle show online status</label>
+                </div>
+            </section>
+            <section id="allow_direct_messages">
+                <h2>Allow Direct Messages</h2>
+                <p>Receive direct messages from others.</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="allow_direct_messages" name="allow_direct_messages">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Toggle allow direct messages</label>
+                </div>
+            </section>
+            <section id="two_factor_authentication">
+                <h2>Two Factor Authentication</h2>
+                <p>Add an extra layer of security to your account.</p>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="two_factor_authentication" name="two_factor_authentication">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Toggle two factor authentication</label>
+                </div>
+                <button class="btn btn-primary">Setup Two Factor Authentication</button>
+            </section>
+            <section id="theme">
+                <h2>Theme</h2>
+                <p>Choose a theme for your profile.</p>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Light</option>
+                    <option value="1">Dark</option>
+                    <option value="2">Auto</option>
+                </select>
+            </section>
+            <section id="display_density">
+                <h2>Display Density</h2>
+                <p>Choose a display density for your profile.</p>
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>Compact</option>
+                    <option value="1">Normal</option>
+                    <option value="2">Spacious</option>
+                </select>
+            </section>
+            <button class="btn btn-primary">Save Changes</button>
+            <button class="btn btn-secondary">Reset All Settings</button>
+        </form>
+    </div>
+</body>
+</html>

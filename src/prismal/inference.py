@@ -1,7 +1,7 @@
 """Inference clients for prismal."""
 
 import asyncio
-import os
+import time
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Any, NoReturn
 
@@ -13,7 +13,7 @@ from tenacity import (
     retry,
     retry_if_exception_type,
     stop_after_attempt,
-    wait_exponential,
+    wait_random_exponential,
 )
 from tqdm.asyncio import tqdm
 
@@ -29,6 +29,41 @@ class InferenceResponse(BaseModel):
 
     content: str
     raw_response: Any
+
+
+class AsyncRateLimiter:
+    """A simple token-bucket rate limiter for asyncio.
+
+    This ensures that requests (including retries) do not exceed a certain
+    Requests Per Minute (RPM) limit.
+    """
+
+    def __init__(self, requests_per_minute: int) -> None:
+        """Initialize the rate limiter.
+
+        Args:
+            requests_per_minute: Maximum number of requests allowed per minute.
+        """
+        self.rpm = requests_per_minute
+        self.delay = 60.0 / requests_per_minute if requests_per_minute > 0 else 0
+        self.last_request_time = 0.0
+        self.lock = asyncio.Lock()
+
+    async def wait(self) -> None:
+        """Wait for a token to become available."""
+        if self.delay <= 0:
+            return
+
+        async with self.lock:
+            now = time.monotonic()
+            elapsed = now - self.last_request_time
+            sleep_time = self.delay - elapsed
+
+            if sleep_time > 0:
+                await asyncio.sleep(sleep_time)
+                self.last_request_time = time.monotonic()
+            else:
+                self.last_request_time = now
 
 
 class BaseInferenceClient(ABC):
@@ -66,6 +101,7 @@ class BaseAsyncInferenceClient(ABC):
         prompts: list[str],
         system_prompts: list[str | None] | None = None,
         max_concurrency: int | None = None,
+        rpm_limit: int | None = None,
         show_progress: bool = False,
         **kwargs: Any,  # noqa: ANN401
     ) -> list[InferenceResponse | BaseException]:
@@ -76,6 +112,7 @@ class BaseAsyncInferenceClient(ABC):
             prompts: A list of user prompts.
             system_prompts: An optional list of system prompts (one per user prompt).
             max_concurrency: Maximum number of concurrent requests.
+            rpm_limit: Maximum requests per minute.
             show_progress: Whether to show a progress bar.
             **kwargs: Additional parameters passed to generate().
 
@@ -90,6 +127,10 @@ class BaseAsyncInferenceClient(ABC):
             msg = "prompts and system_prompts must have the same length."
             raise ValueError(msg)
 
+        # Set the client-level RPM limit if provided
+        if rpm_limit and hasattr(self, "rate_limiter"):
+            self.rate_limiter = AsyncRateLimiter(rpm_limit)
+
         semaphore = asyncio.Semaphore(max_concurrency) if max_concurrency else None
 
         async def sem_generate(p: str, s: str | None) -> InferenceResponse:
@@ -103,7 +144,22 @@ class BaseAsyncInferenceClient(ABC):
         ]
 
         if show_progress:
-            return await tqdm.gather(*tasks, return_exceptions=True)
+            # We use asyncio.gather and wrap it with a progress update logic
+            # to avoid tqdm.gather issues with return_exceptions
+            pbar = tqdm(total=len(tasks))
+
+            async def wrapped_task(task: Any) -> Any:  # noqa: ANN401
+                try:
+                    return await task
+                finally:
+                    pbar.update(1)
+
+            wrapped_tasks = [wrapped_task(t) for t in tasks]
+            try:
+                return await asyncio.gather(*wrapped_tasks, return_exceptions=True)
+            finally:
+                pbar.close()
+
         return await asyncio.gather(*tasks, return_exceptions=True)
 
 
@@ -114,7 +170,7 @@ class OpenAIInferenceClient(BaseInferenceClient):
         self,
         api_key: str | None = None,
         base_url: str | None = None,
-        max_retries: int = 3,
+        max_retries: int = 5,
     ) -> None:
         """Initialize the OpenAI client.
 
@@ -137,7 +193,7 @@ class OpenAIInferenceClient(BaseInferenceClient):
 
         @retry(
             stop=stop_after_attempt(self.max_retries),
-            wait=wait_exponential(multiplier=1, min=4, max=60),
+            wait=wait_random_exponential(multiplier=1, min=4, max=60),
             retry=retry_if_exception_type((ValueError, Exception)),
             reraise=True,
         )
@@ -174,23 +230,6 @@ class OpenAIInferenceClient(BaseInferenceClient):
         raise ValueError(msg)
 
 
-class PGAISInferenceClient(OpenAIInferenceClient):
-    """Specialized client for Purdue GenAI Studio."""
-
-    DEFAULT_BASE_URL = "https://genai.rcac.purdue.edu/api"
-
-    def __init__(
-        self,
-        api_key: str | None = None,
-        base_url: str | None = None,
-        max_retries: int = 5,
-    ) -> None:
-        """Initialize the PGAIS client."""
-        api_key = api_key or os.getenv("PGAIS_KEY")
-        base_url = base_url or self.DEFAULT_BASE_URL
-        super().__init__(api_key=api_key, base_url=base_url, max_retries=max_retries)
-
-
 class AsyncOpenAIInferenceClient(BaseAsyncInferenceClient):
     """Asynchronous client for OpenAI-compatible APIs."""
 
@@ -198,11 +237,20 @@ class AsyncOpenAIInferenceClient(BaseAsyncInferenceClient):
         self,
         api_key: str | None = None,
         base_url: str | None = None,
-        max_retries: int = 3,
+        max_retries: int = 5,
+        requests_per_minute: int = 20,
     ) -> None:
-        """Initialize the async OpenAI client."""
+        """Initialize the async OpenAI client.
+
+        Args:
+            api_key: The API key.
+            base_url: The base URL.
+            max_retries: Number of retries for failed requests.
+            requests_per_minute: Global RPM limit (including retries).
+        """
         self.client = AsyncOpenAI(api_key=api_key, base_url=base_url)
         self.max_retries = max_retries
+        self.rate_limiter = AsyncRateLimiter(requests_per_minute)
 
     async def generate(
         self,
@@ -215,11 +263,13 @@ class AsyncOpenAIInferenceClient(BaseAsyncInferenceClient):
 
         @retry(
             stop=stop_after_attempt(self.max_retries),
-            wait=wait_exponential(multiplier=1, min=4, max=60),
+            wait=wait_random_exponential(multiplier=1, min=4, max=60),
             retry=retry_if_exception_type((ValueError, Exception)),
             reraise=True,
         )
         async def _generate_with_retry() -> InferenceResponse:
+            # Wait for rate limiter before every attempt
+            await self.rate_limiter.wait()
             messages: list[ChatCompletionMessageParam] = []
             if system_prompt:
                 messages.append({"role": "system", "content": system_prompt})
@@ -240,8 +290,12 @@ class AsyncOpenAIInferenceClient(BaseAsyncInferenceClient):
 
                 content = response.choices[0].message.content or ""
                 return InferenceResponse(content=content, raw_response=response)
-            except Exception:
-                logger.warning("Async inference attempt failed for model {}", model_id)
+            except Exception as e:
+                logger.warning(
+                    "Async inference attempt failed for model {} (Error: {})",
+                    model_id,
+                    str(e),
+                )
                 raise
 
         return await _generate_with_retry()
@@ -250,20 +304,3 @@ class AsyncOpenAIInferenceClient(BaseAsyncInferenceClient):
         """Raise an error for an invalid response."""
         msg = f"Invalid or empty response from API: {response}"
         raise ValueError(msg)
-
-
-class AsyncPGAISInferenceClient(AsyncOpenAIInferenceClient):
-    """Specialized async client for Purdue GenAI Studio."""
-
-    DEFAULT_BASE_URL = "https://genai.rcac.purdue.edu/api"
-
-    def __init__(
-        self,
-        api_key: str | None = None,
-        base_url: str | None = None,
-        max_retries: int = 5,
-    ) -> None:
-        """Initialize the async PGAIS client."""
-        api_key = api_key or os.getenv("PGAIS_KEY")
-        base_url = base_url or self.DEFAULT_BASE_URL
-        super().__init__(api_key=api_key, base_url=base_url, max_retries=max_retries)

@@ -27,7 +27,7 @@ class DataConfig(BaseModel):
 
     Attributes:
         input: Path to the input data file.
-        output: Path where the experiment results will be saved.
+        output: Path to the base directory where experiment results will be saved.
     """
 
     input: Path
@@ -41,10 +41,14 @@ class ComputeConfig(BaseModel):
         location: Location or service where inference is performed.
             Must be either "local" or "remote".
         url: URL for remote inference. Required if location is "remote".
+        max_concurrency: Maximum number of concurrent requests.
     """
 
     location: Literal["local", "remote"]
     url: str | None = None
+    max_concurrency: PositiveInt = 10
+    requests_per_minute: PositiveInt = 20
+    max_retries: PositiveInt = 5
 
     @model_validator(mode="after")
     def validate_compute_config(self) -> Self:
@@ -107,6 +111,21 @@ class ConfigBase(BaseModel):
     compute: ComputeConfig
     model: ModelConfig
 
+    @property
+    def output_dir(self) -> Path:
+        """Get the experiment-specific output directory.
+
+        The directory is constructed as `data.output / experiment.name`.
+        If the path is relative, it is resolved against `ROOT_DIR`.
+
+        Returns:
+            The path to the experiment output directory.
+        """
+        path = self.data.output / self.experiment.name
+        if not path.is_absolute():
+            path = ROOT_DIR / path
+        return path
+
     @classmethod
     def from_toml(cls, path: Path | str) -> Self:
         """Load configuration from a TOML file.
@@ -164,7 +183,7 @@ def _find_root() -> Path:
 ROOT_DIR: Path = _find_root()
 
 # Directory for configuration files.
-CONFIG_DIR: Path = ROOT_DIR / "config"
+CONFIG_DIR: Path = ROOT_DIR / "configs"
 
 # Directory for raw and processed data.
 DATA_DIR: Path = ROOT_DIR / "data"

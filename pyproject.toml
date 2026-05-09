@@ -12,7 +12,6 @@ dependencies = [
     "loguru>=0.7.3",
     "numpy>=2.4.4",
     "pydantic>=2.13.3",
-    "tenacity>=9.0.0",
     "tqdm>=4.67.3",
 ]
 
@@ -21,23 +20,27 @@ requires = ["uv_build>=0.11.8,<0.12.0"]
 build-backend = "uv_build"
 
 [dependency-groups]
-#- Analysis dependencies
+# Analysis dependencies
 analysis = [
     "marimo>=0.23.4",
     "polars>=1.40.1",
+    "scipy>=1.17.1",
     "seaborn>=0.13.2",
+    "html2pic>=0.1.2",
+    "skia-python>=87.5",
+    "beautifulsoup4>=4.12.3",
 ]
 
 ## If you prefer jupyter/pandas, add/switch to this group.
 ## Prefer using one over both.
-# analysis-legacy = [
-#     "ipywidgets>=8.1.8",
-#     "jupyterlab>=4.5.7",
-#     "matplotlib>=3.10.9",
-#     "numpy>=2.4.4",
-#     "pandas>=3.0.2",
-#     "pyarrow>=24.0.0", # native in polars
-# ]
+analysis-legacy = [
+    "ipywidgets>=8.1.8",
+    "jupyterlab>=4.5.7",
+    "matplotlib>=3.10.9",
+    "numpy>=2.4.4",
+    "pandas>=3.0.2",
+    "pyarrow>=24.0.0", # native in polars
+]
 
 # Dev environment dependencies
 # These can be skipped for scripted runs in noninteractive environments
@@ -47,6 +50,7 @@ dev = [
     "pytest>=9.0.3",
     "ruff>=0.15.12",
     "rumdl>=0.1.87",
+    "scipy-stubs>=1.17.1.4",
     "ty>=0.0.34",
 ]
 
@@ -61,6 +65,7 @@ local-inference = [
 remote-inference = [
     "openai>=2.33.0",
     "requests>=2.33.1",
+    "tenacity>=9.0.0",
 ]
 
 [tool.uv]

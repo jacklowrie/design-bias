@@ -10,6 +10,7 @@ from pathlib import Path
 
 import polars as pl
 from loguru import logger
+from tqdm import tqdm
 
 from design_bias.config import DesignPromptDataset, DesignPromptRow
 from prismal.config import DATA_DIR
@@ -50,12 +51,23 @@ def parse_args() -> argparse.Namespace:
         default="outputs/prompts.parquet",
         help="Path to the output parquet file.",
     )
+    parser.add_argument(
+        "--log-level",
+        type=str,
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level (default: INFO).",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     """Main execution function."""
     args = parse_args()
+
+    # Configure logging to work with tqdm
+    logger.remove()
+    logger.add(lambda msg: tqdm.write(msg, end=""), level=args.log_level, colorize=True)
 
     output_path = Path(args.output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)

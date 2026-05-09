@@ -1,0 +1,19 @@
+[experiment]
+name = "pgais-debug"
+task = "inference"
+
+[data]
+input = "data/prompts-lite-dataset.parquet"
+output = "outputs"
+
+[compute]
+location = "remote"
+url = "https://genai.rcac.purdue.edu/api/chat/completions"
+max_concurrency = 20
+requests_per_minute = 20
+
+[model]
+id = "llama3.3:70b"
+num_samples = 2
+temperature = 0.7
+seed = 542026

@@ -1,14 +1,16 @@
 [experiment]
-name = "pgais-fixed"
-task = ""
+name = "pgais-pilot"
+task = "inference"
 
 [data]
-input = "data/design-prompts-lite-dataset.csv"
-output = "outputs/design-responses-lite-dataset.csv"
+input = "data/prompts-lite-dataset.parquet"
+output = "outputs"
 
 [compute]
 location = "remote"
 url = "https://genai.rcac.purdue.edu/api/chat/completions"
+max_concurrency = 20
+requests_per_minute = 19
 
 [model]
 path = "pgais-lite-models.csv"

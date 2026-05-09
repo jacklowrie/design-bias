@@ -1,2 +1,3 @@
 gpt-oss:120b
-llama3.1:70b-instruct-q4_K_M
+llama4:latest
+codellama:latest

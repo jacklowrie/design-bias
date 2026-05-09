@@ -1,0 +1,19 @@
+[experiment]
+name = "pgais-pilot-debiased"
+task = "inference"
+
+[data]
+input = "data/prompts-debiased-lite-dataset.parquet"
+output = "outputs"
+
+[compute]
+location = "remote"
+url = "https://genai.rcac.purdue.edu/api/chat/completions"
+max_concurrency = 20
+requests_per_minute = 19
+
+[model]
+path = "pgais-debiased-lite-models.csv"
+num_samples = 50
+temperature = 0.7
+seed = 542026

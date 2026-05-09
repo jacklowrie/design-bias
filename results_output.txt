@@ -1,0 +1,312 @@
+2026-05-07 01:42:24.164 | INFO     | __main__:main:61 - Loading results for experiment: pgais-pilot
+2026-05-07 01:42:24.177 | INFO     | __main__:main:73 - Extracting features from 1600 generations...
+2026-05-07 01:42:24.558 | INFO     | __main__:main:77 -
+==================================================
+2026-05-07 01:42:24.558 | INFO     | __main__:main:78 -  ANALYSIS SUMMARY: PGAIS-PILOT
+2026-05-07 01:42:24.558 | INFO     | __main__:main:79 - ==================================================
+2026-05-07 01:42:24.558 | INFO     | design_bias.analysis:run_complexity_stats:204 -
+--- Customization Complexity (Declaration Count) ---
+2026-05-07 01:42:24.559 | INFO     | design_bias.analysis:run_complexity_stats:216 -
+shape: (4, 4)
+┌────────────────────┬────────────┬──────────────┬─────┐
+│ detected_framework ┆ mean_decls ┆ median_decls ┆ n   │
+│ ---                ┆ ---        ┆ ---          ┆ --- │
+│ str                ┆ f64        ┆ f64          ┆ u32 │
+╞════════════════════╪════════════╪══════════════╪═════╡
+│ custom/none        ┆ 52.656716  ┆ 42.0         ┆ 134 │
+│ bootstrap          ┆ 17.536036  ┆ 14.0         ┆ 666 │
+│ bulma              ┆ 13.2775    ┆ 10.0         ┆ 400 │
+│ tailwind           ┆ 11.2625    ┆ 9.0          ┆ 400 │
+└────────────────────┴────────────┴──────────────┴─────┘
+2026-05-07 01:42:24.561 | INFO     | design_bias.analysis:run_complexity_stats:230 -
+Kruskal-Wallis H-test (Global Difference): H=200.34, p=3.132e-44
+2026-05-07 01:42:24.561 | INFO     | design_bias.analysis:run_complexity_stats:237 - RESULT: Significant difference between frameworks. Pairwise tests:
+2026-05-07 01:42:24.563 | INFO     | design_bias.analysis:run_complexity_stats:249 - Tailwind vs Bootstrap: p=6.32e-44
+2026-05-07 01:42:24.563 | INFO     | __main__:main:87 -
+--- LATENT DESIGN PREFERENCES (Control Group) ---
+2026-05-07 01:42:24.563 | INFO     | __main__:main:92 -
+--- STRICT LATENT (No Framework, No Descriptor) ---
+2026-05-07 01:42:24.563 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Framework Choice ---
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (2, 2)
+┌────────────────────┬─────┐
+│ detected_framework ┆ len │
+│ ---                ┆ --- │
+│ str                ┆ u32 │
+╞════════════════════╪═════╡
+│ bootstrap          ┆ 96  │
+│ custom/none        ┆ 4   │
+└────────────────────┴─────┘
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 84.64
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 3.579e-20
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Framework Choice.
+2026-05-07 01:42:24.564 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Font Choice ---
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (3, 2)
+┌───────────────┬─────┐
+│ detected_font ┆ len │
+│ ---           ┆ --- │
+│ str           ┆ u32 │
+╞═══════════════╪═════╡
+│ Arial         ┆ 50  │
+│ unknown       ┆ 36  │
+│ system-ui     ┆ 14  │
+└───────────────┴─────┘
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 19.76
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 5.119e-05
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Font Choice.
+2026-05-07 01:42:24.565 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Palette Choice ---
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (10, 2)
+┌──────────────────┬─────┐
+│ detected_palette ┆ len │
+│ ---              ┆ --- │
+│ str              ┆ u32 │
+╞══════════════════╪═════╡
+│ monochrome       ┆ 58  │
+│ green/gray       ┆ 13  │
+│ gray/blue        ┆ 10  │
+│ slate            ┆ 6   │
+│ blue             ┆ 6   │
+│ gray             ┆ 2   │
+│ blue/gray        ┆ 2   │
+│ gray/slate       ┆ 1   │
+│ green/red        ┆ 1   │
+│ slate/gray       ┆ 1   │
+└──────────────────┴─────┘
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 271.60
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 2.714e-53
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Palette Choice.
+2026-05-07 01:42:24.566 | INFO     | __main__:main:104 -
+--- DESCRIPTOR BREAKDOWN (No Framework, With Descriptor) ---
+2026-05-07 01:42:24.566 | INFO     | design_bias.analysis:run_significance_test:168 -
+--- Significance Test for Framework Choice (grouped by descriptor) ---
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: professional
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Framework Choice [professional] ---
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (2, 2)
+┌────────────────────┬─────┐
+│ detected_framework ┆ len │
+│ ---                ┆ --- │
+│ str                ┆ u32 │
+╞════════════════════╪═════╡
+│ bootstrap          ┆ 73  │
+│ custom/none        ┆ 27  │
+└────────────────────┴─────┘
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 21.16
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 4.225e-06
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.567 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Framework Choice [professional].
+2026-05-07 01:42:24.568 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: retro
+2026-05-07 01:42:24.568 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Framework Choice [retro] ---
+2026-05-07 01:42:24.568 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.568 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (2, 2)
+┌────────────────────┬─────┐
+│ detected_framework ┆ len │
+│ ---                ┆ --- │
+│ str                ┆ u32 │
+╞════════════════════╪═════╡
+│ custom/none        ┆ 67  │
+│ bootstrap          ┆ 33  │
+└────────────────────┴─────┘
+2026-05-07 01:42:24.568 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 11.56
+2026-05-07 01:42:24.569 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 0.0006739
+2026-05-07 01:42:24.569 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.569 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Framework Choice [retro].
+2026-05-07 01:42:24.569 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: creative
+2026-05-07 01:42:24.569 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Framework Choice [creative] ---
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (2, 2)
+┌────────────────────┬─────┐
+│ detected_framework ┆ len │
+│ ---                ┆ --- │
+│ str                ┆ u32 │
+╞════════════════════╪═════╡
+│ bootstrap          ┆ 64  │
+│ custom/none        ┆ 36  │
+└────────────────────┴─────┘
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 7.84
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 0.00511
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Framework Choice [creative].
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:168 -
+--- Significance Test for Font Choice (grouped by descriptor) ---
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: retro
+2026-05-07 01:42:24.570 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Font Choice [retro] ---
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (5, 2)
+┌───────────────────┬─────┐
+│ detected_font     ┆ len │
+│ ---               ┆ --- │
+│ str               ┆ u32 │
+╞═══════════════════╪═════╡
+│ Arial             ┆ 50  │
+│ Press Start 2P    ┆ 29  │
+│ var(--font)       ┆ 12  │
+│ Courier New       ┆ 8   │
+│ var(--font-retro) ┆ 1   │
+└───────────────────┴─────┘
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 77.50
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 5.894e-16
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Font Choice [retro].
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: professional
+2026-05-07 01:42:24.571 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Font Choice [professional] ---
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (5, 2)
+┌────────────────┬─────┐
+│ detected_font  ┆ len │
+│ ---            ┆ --- │
+│ str            ┆ u32 │
+╞════════════════╪═════╡
+│ Arial          ┆ 50  │
+│ unknown        ┆ 36  │
+│ system-ui      ┆ 12  │
+│ Segoe UI       ┆ 1   │
+│ Helvetica Neue ┆ 1   │
+└────────────────┴─────┘
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 97.10
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 4.074e-20
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Font Choice [professional].
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: creative
+2026-05-07 01:42:24.572 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Font Choice [creative] ---
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (5, 2)
+┌────────────────┬─────┐
+│ detected_font  ┆ len │
+│ ---            ┆ --- │
+│ str            ┆ u32 │
+╞════════════════╪═════╡
+│ Arial          ┆ 50  │
+│ unknown        ┆ 27  │
+│ Helvetica Neue ┆ 12  │
+│ system-ui      ┆ 8   │
+│ Segoe UI       ┆ 3   │
+└────────────────┴─────┘
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 72.30
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 7.417e-15
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Font Choice [creative].
+2026-05-07 01:42:24.573 | INFO     | design_bias.analysis:run_significance_test:168 -
+--- Significance Test for Palette Choice (grouped by descriptor) ---
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: professional
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Palette Choice [professional] ---
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (8, 2)
+┌──────────────────┬─────┐
+│ detected_palette ┆ len │
+│ ---              ┆ --- │
+│ str              ┆ u32 │
+╞══════════════════╪═════╡
+│ monochrome       ┆ 54  │
+│ green/gray       ┆ 14  │
+│ green/slate      ┆ 13  │
+│ gray/blue        ┆ 12  │
+│ blue/gray        ┆ 3   │
+│ blue/slate       ┆ 2   │
+│ slate            ┆ 1   │
+│ slate/gray       ┆ 1   │
+└──────────────────┴─────┘
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 175.20
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 2.009e-34
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.574 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Palette Choice [professional].
+2026-05-07 01:42:24.575 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: retro
+2026-05-07 01:42:24.575 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Palette Choice [retro] ---
+2026-05-07 01:42:24.575 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.575 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (18, 2)
+┌──────────────────┬─────┐
+│ detected_palette ┆ len │
+│ ---              ┆ --- │
+│ str              ┆ u32 │
+╞══════════════════╪═════╡
+│ green/gray       ┆ 50  │
+│ slate/amber      ┆ 19  │
+│ slate/violet     ┆ 4   │
+│ amber/slate      ┆ 4   │
+│ green/slate      ┆ 3   │
+│ …                ┆ …   │
+│ slate/gray       ┆ 1   │
+│ slate            ┆ 1   │
+│ amber/green      ┆ 1   │
+│ slate/emerald    ┆ 1   │
+│ green            ┆ 1   │
+└──────────────────┴─────┘
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 429.20
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 1.432e-80
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Palette Choice [retro].
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:174 -
+Group: creative
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:178 -
+--- Significance Test for Palette Choice [creative] ---
+2026-05-07 01:42:24.576 | INFO     | design_bias.analysis:run_significance_test:180 - Observed Frequencies:
+2026-05-07 01:42:24.577 | INFO     | design_bias.analysis:run_significance_test:181 -
+shape: (23, 2)
+┌──────────────────┬─────┐
+│ detected_palette ┆ len │
+│ ---              ┆ --- │
+│ str              ┆ u32 │
+╞══════════════════╪═════╡
+│ gray/amber       ┆ 23  │
+│ monochrome       ┆ 15  │
+│ slate/gray       ┆ 9   │
+│ green/gray       ┆ 9   │
+│ amber/red        ┆ 8   │
+│ …                ┆ …   │
+│ slate/violet     ┆ 1   │
+│ indigo/gray      ┆ 1   │
+│ violet/indigo    ┆ 1   │
+│ blue/amber       ┆ 1   │
+│ indigo/blue      ┆ 1   │
+└──────────────────┴─────┘
+2026-05-07 01:42:24.577 | INFO     | design_bias.analysis:run_significance_test:189 - Chi-Square Statistic: 147.02
+2026-05-07 01:42:24.577 | INFO     | design_bias.analysis:run_significance_test:190 - P-value: 1.743e-20
+2026-05-07 01:42:24.577 | INFO     | design_bias.analysis:run_significance_test:194 - Result: STATISTICALLY SIGNIFICANT (p < 0.05). Reject H0.
+2026-05-07 01:42:24.577 | INFO     | design_bias.analysis:run_significance_test:195 - The model exhibits a non-random preference in Palette Choice [creative].
+2026-05-07 01:42:24.577 | INFO     | __main__:main:131 -
+--- MODEL ADHERENCE ---
+2026-05-07 01:42:24.578 | INFO     | __main__:main:135 -
+shape: (2, 2)
+┌───────────────┬────────────────┐
+│ model         ┆ adherence_rate │
+│ ---           ┆ ---            │
+│ str           ┆ f64            │
+╞═══════════════╪════════════════╡
+│ gpt-oss_120b  ┆ 1.0            │
+│ llama4_latest ┆ 1.0            │
+└───────────────┴────────────────┘
